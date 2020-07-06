@@ -9,7 +9,7 @@ module.exports = {
   mode: 'development',
   entry: './index.js',
   output: {
-    filename: 'bundle.[hashnpm install --save-dev html-webpack-plugin].js',
+    filename: 'bundle.[hash].js',
     path: path.resolve(__dirname, 'dist')
   },
   resolve: {
@@ -39,9 +39,24 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        test: /\.s[ac]ss$/i,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'sass-loader',
+        ],
       },
+      {
+        test: /\.m?js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env']
+          }
+        }
+      },
+
     ],
   },
 }
